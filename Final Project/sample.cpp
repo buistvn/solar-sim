@@ -188,6 +188,15 @@ int		Xmouse, Ymouse;			// mouse values
 float	Xrot, Yrot;				// rotation angles in degrees
 int		NumLngs, NumLats;
 struct 	point *	Pts;
+GLuint	SunList;
+GLuint	MercuryList;
+GLuint	VenusList;
+GLuint	EarthList;
+GLuint	MarsList;
+GLuint	JupiterList;
+GLuint	SaturnList;
+GLuint	UranusList;
+GLuint	NeptuneList;
 
 
 // function prototypes:
@@ -397,7 +406,49 @@ Display( )
 
 	// draw the current object:
 
-	OsuSphere( 1.0, 100, 100 );
+	glPushMatrix( );
+	glCallList( SunList );
+	glPopMatrix( );
+
+	glPushMatrix( );
+	glTranslatef( 0.65, 0.0, 0.0 );
+	glCallList( MercuryList );
+	glPopMatrix( );
+
+	glPushMatrix( );
+	glTranslatef( 1.20, 0.0, 0.0 );
+	glCallList( VenusList );
+	glPopMatrix( );
+
+	glPushMatrix( );
+	glTranslatef( 1.67, 0.0, 0.0 );
+	glCallList( EarthList );
+	glPopMatrix( );
+
+	glPushMatrix( );
+	glTranslatef( 2.53, 0.0, 0.0 );
+	glCallList( MarsList );
+	glPopMatrix( );
+
+	glPushMatrix( );
+	glTranslatef( 8.67, 0.0, 0.0 );
+	glCallList( JupiterList );
+	glPopMatrix( );
+
+	glPushMatrix( );
+	glTranslatef( 15.90, 0.0, 0.0 );
+	glCallList( SaturnList );
+	glPopMatrix( );
+
+	glPushMatrix( );
+	glTranslatef( 31.97, 0.0, 0.0 );
+	glCallList( UranusList );
+	glPopMatrix( );
+
+	glPushMatrix( );
+	glTranslatef( 50.10, 0.0, 0.0 );
+	glCallList( NeptuneList );
+	glPopMatrix( );
 
 #ifdef DEMO_Z_FIGHTING
 	if( DepthFightingOn != 0 )
@@ -717,48 +768,51 @@ InitLists( )
 	float dz = BOXSIZE / 2.f;
 	glutSetWindow( MainWindow );
 
-	// create the object:
+	// create the objects:
 
-	BoxList = glGenLists( 1 );
-	glNewList( BoxList, GL_COMPILE );
+	SunList = glGenLists( 1 );
+	glNewList( SunList, GL_COMPILE );
+		OsuSphere( 0.500, 100, 100 );
+	glEndList( );
 
-		glBegin( GL_QUADS );
+	MercuryList = glGenLists( 1 );
+	glNewList( MercuryList, GL_COMPILE );
+		OsuSphere( 0.017, 100, 100 );
+	glEndList( );
 
-			glColor3f( 0., 0., 1. );
-				glVertex3f( -dx, -dy,  dz );
-				glVertex3f(  dx, -dy,  dz );
-				glVertex3f(  dx,  dy,  dz );
-				glVertex3f( -dx,  dy,  dz );
+	VenusList = glGenLists( 1 );
+	glNewList( VenusList, GL_COMPILE );
+		OsuSphere( 0.041, 100, 100 );
+	glEndList( );
 
-				glVertex3f( -dx, -dy, -dz );
-				glVertex3f( -dx,  dy, -dz );
-				glVertex3f(  dx,  dy, -dz );
-				glVertex3f(  dx, -dy, -dz );
+	EarthList = glGenLists( 1 );
+	glNewList( EarthList, GL_COMPILE );
+		OsuSphere( 0.043, 100, 100 );
+	glEndList( );
 
-			glColor3f( 1., 0., 0. );
-				glVertex3f(  dx, -dy,  dz );
-				glVertex3f(  dx, -dy, -dz );
-				glVertex3f(  dx,  dy, -dz );
-				glVertex3f(  dx,  dy,  dz );
+	MarsList = glGenLists( 1 );
+	glNewList( MarsList, GL_COMPILE );
+		OsuSphere( 0.023, 100, 100 );
+	glEndList( );
 
-				glVertex3f( -dx, -dy,  dz );
-				glVertex3f( -dx,  dy,  dz );
-				glVertex3f( -dx,  dy, -dz );
-				glVertex3f( -dx, -dy, -dz );
+	JupiterList = glGenLists( 1 );
+	glNewList( JupiterList, GL_COMPILE );
+		OsuSphere( 0.477, 100, 100 );
+	glEndList( );
 
-			glColor3f( 0., 1., 0. );
-				glVertex3f( -dx,  dy,  dz );
-				glVertex3f(  dx,  dy,  dz );
-				glVertex3f(  dx,  dy, -dz );
-				glVertex3f( -dx,  dy, -dz );
+	SaturnList = glGenLists( 1 );
+	glNewList( SaturnList, GL_COMPILE );
+		OsuSphere( 0.397, 100, 100 );
+	glEndList( );
 
-				glVertex3f( -dx, -dy,  dz );
-				glVertex3f( -dx, -dy, -dz );
-				glVertex3f(  dx, -dy, -dz );
-				glVertex3f(  dx, -dy,  dz );
+	UranusList = glGenLists( 1 );
+	glNewList( UranusList, GL_COMPILE );
+		OsuSphere( 0.173, 100, 100 );
+	glEndList( );
 
-		glEnd( );
-
+	NeptuneList = glGenLists( 1 );
+	glNewList( NeptuneList, GL_COMPILE );
+		OsuSphere( 0.168, 100, 100 );
 	glEndList( );
 
 	// create the axes:
