@@ -197,6 +197,15 @@ GLuint	JupiterList;
 GLuint	SaturnList;
 GLuint	UranusList;
 GLuint	NeptuneList;
+GLuint	SunTex;
+GLuint	MercuryTex;
+GLuint	VenusTex;
+GLuint	EarthTex;
+GLuint	MarsTex;
+GLuint	JupiterTex;
+GLuint	SaturnTex;
+GLuint	UranusTex;
+GLuint	NeptuneTex;
 
 
 // function prototypes:
@@ -406,49 +415,71 @@ Display( )
 
 	// draw the current object:
 
+	glEnable( GL_TEXTURE_2D );
+
 	glPushMatrix( );
+	glBindTexture( GL_TEXTURE_2D, SunTex );
+	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( SunList );
 	glPopMatrix( );
 
 	glPushMatrix( );
 	glTranslatef( 0.65, 0.0, 0.0 );
+	glBindTexture( GL_TEXTURE_2D, MercuryTex );
+	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( MercuryList );
 	glPopMatrix( );
 
 	glPushMatrix( );
 	glTranslatef( 1.20, 0.0, 0.0 );
+	glBindTexture( GL_TEXTURE_2D, VenusTex );
+	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( VenusList );
 	glPopMatrix( );
 
 	glPushMatrix( );
 	glTranslatef( 1.67, 0.0, 0.0 );
+	glBindTexture( GL_TEXTURE_2D, EarthTex );
+	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( EarthList );
 	glPopMatrix( );
 
 	glPushMatrix( );
 	glTranslatef( 2.53, 0.0, 0.0 );
+	glBindTexture( GL_TEXTURE_2D, MarsTex );
+	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( MarsList );
 	glPopMatrix( );
 
 	glPushMatrix( );
 	glTranslatef( 8.67, 0.0, 0.0 );
+	glBindTexture( GL_TEXTURE_2D, JupiterTex );
+	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( JupiterList );
 	glPopMatrix( );
 
 	glPushMatrix( );
 	glTranslatef( 15.90, 0.0, 0.0 );
+	glBindTexture( GL_TEXTURE_2D, SaturnTex );
+	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( SaturnList );
 	glPopMatrix( );
 
 	glPushMatrix( );
 	glTranslatef( 31.97, 0.0, 0.0 );
+	glBindTexture( GL_TEXTURE_2D, UranusTex );
+	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( UranusList );
 	glPopMatrix( );
 
 	glPushMatrix( );
 	glTranslatef( 50.10, 0.0, 0.0 );
+	glBindTexture( GL_TEXTURE_2D, NeptuneTex );
+	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( NeptuneList );
 	glPopMatrix( );
+
+	glDisable( GL_TEXTURE_2D );
 
 #ifdef DEMO_Z_FIGHTING
 	if( DepthFightingOn != 0 )
@@ -739,6 +770,108 @@ InitGraphics( )
 	glutMenuStateFunc( NULL );
 	glutTimerFunc( -1, NULL, 0 );
 	glutIdleFunc( NULL );
+
+	int width0, height0;
+	int width1, height1;
+	int width2, height2;
+	int width3, height3;
+	int width4, height4;
+	int width5, height5;
+	int width6, height6;
+	int width7, height7;
+	int width8, height8;
+	unsigned char * TextureArray0 = BmpToTexture( "suntex.bmp", &width0, &height0 );
+	unsigned char * TextureArray1 = BmpToTexture( "mercurytex.bmp", &width1, &height1 );
+	unsigned char * TextureArray2 = BmpToTexture( "venustex.bmp", &width2, &height2 );
+	unsigned char * TextureArray3 = BmpToTexture( "earthtex.bmp", &width3, &height3 );
+	unsigned char * TextureArray4 = BmpToTexture( "marstex.bmp", &width4, &height4 );
+	unsigned char * TextureArray5 = BmpToTexture( "jupitertex.bmp", &width5, &height5 );
+	unsigned char * TextureArray6 = BmpToTexture( "saturntex.bmp", &width6, &height6 );
+	unsigned char * TextureArray7 = BmpToTexture( "uranustex.bmp", &width7, &height7 );
+	unsigned char * TextureArray8 = BmpToTexture( "neptunetex.bmp", &width8, &height8 );
+	glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
+
+	glGenTextures( 1, &SunTex );
+	glGenTextures( 1, &MercuryTex );
+	glGenTextures( 1, &VenusTex );
+	glGenTextures( 1, &EarthTex );
+	glGenTextures( 1, &MarsTex );
+	glGenTextures( 1, &JupiterTex );
+	glGenTextures( 1, &SaturnTex );
+	glGenTextures( 1, &UranusTex );
+	glGenTextures( 1, &NeptuneTex );
+
+	glBindTexture( GL_TEXTURE_2D, SunTex );
+
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+	glTexImage2D( GL_TEXTURE_2D, 0, 3, width0, height0, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureArray0 );
+
+	glBindTexture( GL_TEXTURE_2D, MercuryTex );
+
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+	glTexImage2D( GL_TEXTURE_2D, 0, 3, width1, height1, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureArray1 );
+
+	glBindTexture( GL_TEXTURE_2D, VenusTex );
+
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+	glTexImage2D( GL_TEXTURE_2D, 0, 3, width2, height2, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureArray2 );
+
+	glBindTexture( GL_TEXTURE_2D, EarthTex );
+
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+	glTexImage2D( GL_TEXTURE_2D, 0, 3, width3, height3, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureArray3 );
+
+	glBindTexture( GL_TEXTURE_2D, MarsTex );
+
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+	glTexImage2D( GL_TEXTURE_2D, 0, 3, width4, height4, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureArray4 );
+
+	glBindTexture( GL_TEXTURE_2D, JupiterTex );
+
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+	glTexImage2D( GL_TEXTURE_2D, 0, 3, width5, height5, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureArray5 );
+
+	glBindTexture( GL_TEXTURE_2D, SaturnTex );
+
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+	glTexImage2D( GL_TEXTURE_2D, 0, 3, width6, height6, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureArray6 );
+
+	glBindTexture( GL_TEXTURE_2D, UranusTex );
+
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+	glTexImage2D( GL_TEXTURE_2D, 0, 3, width7, height7, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureArray7 );
+
+	glBindTexture( GL_TEXTURE_2D, NeptuneTex );
+
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+	glTexImage2D( GL_TEXTURE_2D, 0, 3, width8, height8, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureArray8 );
 
 	// init glew (a window must be open to do this):
 
