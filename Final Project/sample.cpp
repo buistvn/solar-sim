@@ -188,6 +188,22 @@ int		Xmouse, Ymouse;			// mouse values
 float	Xrot, Yrot;				// rotation angles in degrees
 int		NumLngs, NumLats;
 struct 	point *	Pts;
+float 	MercuryOrbitalRadius = 0.65;
+float 	VenusOrbitalRadius = 1.20;
+float 	EarthOrbitalRadius = 1.67;
+float 	MarsOrbitalRadius = 2.53;
+float 	JupiterOrbitalRadius = 8.67;
+float 	SaturnOrbitalRadius = 15.90;
+float 	UranusOrbitalRadius = 31.97;
+float 	NeptuneOrbitalRadius = 50.10;
+float	MercuryOrbitalPeriod;
+float	VenusOrbitalPeriod;
+float	EarthOrbitalPeriod;
+float	MarsOrbitalPeriod;
+float	JupiterOrbitalPeriod;
+float	SaturnOrbitalPeriod;
+float	UranusOrbitalPeriod;
+float	NeptuneOrbitalPeriod;
 GLuint	SunList;
 GLuint	MercuryList;
 GLuint	VenusList;
@@ -206,6 +222,7 @@ GLuint	JupiterTex;
 GLuint	SaturnTex;
 GLuint	UranusTex;
 GLuint	NeptuneTex;
+bool	Frozen;
 
 
 // function prototypes:
@@ -247,6 +264,8 @@ float			Unit(float [3], float [3]);
 inline struct point * 	PtsPointer( int, int );
 inline void 			DrawPoint( struct point * );
 void 					OsuSphere( float, int, int );
+
+float	CalculateOrbitalPeriod( float );
 
 
 // main program:
@@ -306,6 +325,15 @@ Animate( )
 	int ms = glutGet(GLUT_ELAPSED_TIME);			// milliseconds since the program started
 	ms %= MS_IN_THE_ANIMATION_CYCLE;				// milliseconds in the range 0 to MS_IN_THE_ANIMATION_CYCLE-1
 	Time = (float)ms / (float)MS_IN_THE_ANIMATION_CYCLE;        // [ 0., 1. )
+
+	MercuryOrbitalPeriod = CalculateOrbitalPeriod( MercuryOrbitalRadius );
+	VenusOrbitalPeriod = CalculateOrbitalPeriod( VenusOrbitalRadius );
+	EarthOrbitalPeriod = CalculateOrbitalPeriod( EarthOrbitalRadius );
+	MarsOrbitalPeriod = CalculateOrbitalPeriod( MarsOrbitalRadius );
+	JupiterOrbitalPeriod = CalculateOrbitalPeriod( JupiterOrbitalRadius );
+	SaturnOrbitalPeriod = CalculateOrbitalPeriod( SaturnOrbitalRadius );
+	UranusOrbitalPeriod = CalculateOrbitalPeriod( UranusOrbitalRadius );
+	NeptuneOrbitalPeriod = CalculateOrbitalPeriod( NeptuneOrbitalRadius );
 
 	// force a call to Display( ) next time it is convenient:
 
@@ -424,56 +452,64 @@ Display( )
 	glPopMatrix( );
 
 	glPushMatrix( );
-	glTranslatef( 0.65, 0.0, 0.0 );
+	glRotatef( MercuryOrbitalPeriod, 0.0, 1.0, 0.0 );
+	glTranslatef( MercuryOrbitalRadius, 0.0, 0.0 );
 	glBindTexture( GL_TEXTURE_2D, MercuryTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( MercuryList );
 	glPopMatrix( );
 
 	glPushMatrix( );
-	glTranslatef( 1.20, 0.0, 0.0 );
+	glRotatef( VenusOrbitalPeriod, 0.0, 1.0, 0.0 );
+	glTranslatef( VenusOrbitalRadius, 0.0, 0.0 );
 	glBindTexture( GL_TEXTURE_2D, VenusTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( VenusList );
 	glPopMatrix( );
 
 	glPushMatrix( );
-	glTranslatef( 1.67, 0.0, 0.0 );
+	glRotatef( EarthOrbitalPeriod, 0.0, 1.0, 0.0 );
+	glTranslatef( EarthOrbitalRadius, 0.0, 0.0 );
 	glBindTexture( GL_TEXTURE_2D, EarthTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( EarthList );
 	glPopMatrix( );
 
 	glPushMatrix( );
-	glTranslatef( 2.53, 0.0, 0.0 );
+	glRotatef( MarsOrbitalPeriod, 0.0, 1.0, 0.0 );
+	glTranslatef( MarsOrbitalRadius, 0.0, 0.0 );
 	glBindTexture( GL_TEXTURE_2D, MarsTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( MarsList );
 	glPopMatrix( );
 
 	glPushMatrix( );
-	glTranslatef( 8.67, 0.0, 0.0 );
+	glRotatef( JupiterOrbitalPeriod, 0.0, 1.0, 0.0 );
+	glTranslatef( JupiterOrbitalRadius, 0.0, 0.0 );
 	glBindTexture( GL_TEXTURE_2D, JupiterTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( JupiterList );
 	glPopMatrix( );
 
 	glPushMatrix( );
-	glTranslatef( 15.90, 0.0, 0.0 );
+	glRotatef( SaturnOrbitalPeriod, 0.0, 1.0, 0.0 );
+	glTranslatef( SaturnOrbitalRadius, 0.0, 0.0 );
 	glBindTexture( GL_TEXTURE_2D, SaturnTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( SaturnList );
 	glPopMatrix( );
 
 	glPushMatrix( );
-	glTranslatef( 31.97, 0.0, 0.0 );
+	glRotatef( UranusOrbitalPeriod, 0.0, 1.0, 0.0 );
+	glTranslatef( UranusOrbitalRadius, 0.0, 0.0 );
 	glBindTexture( GL_TEXTURE_2D, UranusTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( UranusList );
 	glPopMatrix( );
 
 	glPushMatrix( );
-	glTranslatef( 50.10, 0.0, 0.0 );
+	glRotatef( NeptuneOrbitalPeriod, 0.0, 1.0, 0.0 );
+	glTranslatef( NeptuneOrbitalRadius, 0.0, 0.0 );
 	glBindTexture( GL_TEXTURE_2D, NeptuneTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( NeptuneList );
@@ -769,7 +805,7 @@ InitGraphics( )
 	glutTabletButtonFunc( NULL );
 	glutMenuStateFunc( NULL );
 	glutTimerFunc( -1, NULL, 0 );
-	glutIdleFunc( NULL );
+	glutIdleFunc( Animate );
 
 	int width0, height0;
 	int width1, height1;
@@ -985,6 +1021,19 @@ Keyboard( unsigned char c, int x, int y )
 			DoMainMenu( QUIT );	// will not return here
 			break;				// happy compiler
 
+		case 'f':
+		case 'F':
+			Frozen = !Frozen;
+			if ( Frozen )
+			{
+				glutIdleFunc( NULL );
+			}
+			else
+			{
+				glutIdleFunc( Animate );
+			}
+			break;
+
 		default:
 			fprintf( stderr, "Don't know what to do with keyboard hit: '%c' (0x%0x)\n", c, c );
 	}
@@ -1109,6 +1158,7 @@ Reset( )
 	WhichColor = WHITE;
 	WhichProjection = PERSP;
 	Xrot = Yrot = 0.;
+	Frozen = false;
 }
 
 
@@ -1736,4 +1786,16 @@ OsuSphere( float radius, int slices, int stacks )
 
 	delete [ ] Pts;
 	Pts = NULL;
+}
+
+float
+CalculateOrbitalPeriod( float OrbitalRadius )
+{
+	float OrbitalPeriod = pow( OrbitalRadius, 3./2. );
+	int MAX_TIME_MS = OrbitalPeriod * 10000;
+	int ms = glutGet( GLUT_ELAPSED_TIME );
+	ms %= MAX_TIME_MS;
+	float NewOrbitalPeriod = (float) ms / (float) MAX_TIME_MS * 360.0;
+
+	return NewOrbitalPeriod;
 }
