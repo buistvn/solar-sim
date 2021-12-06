@@ -468,13 +468,14 @@ Display( )
 
 	glPushMatrix( );
 	glBindTexture( GL_TEXTURE_2D, SunTex );
-	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
 	glCallList( SunList );
 	glPopMatrix( );
 
 	glPushMatrix( );
 	glRotatef( MercuryOrbitalPeriod, 0.0, 1.0, 0.0 );
 	glTranslatef( MercuryOrbitalRadius, 0.0, 0.0 );
+	SetMaterial( 1.0, 1.0, 1.0, 5.0 );
 	glBindTexture( GL_TEXTURE_2D, MercuryTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( MercuryList );
@@ -483,6 +484,7 @@ Display( )
 	glPushMatrix( );
 	glRotatef( VenusOrbitalPeriod, 0.0, 1.0, 0.0 );
 	glTranslatef( 0.0, 0.0, VenusOrbitalRadius );
+	SetMaterial( 1.0, 1.0, 1.0, 5.0 );
 	glBindTexture( GL_TEXTURE_2D, VenusTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( VenusList );
@@ -491,6 +493,7 @@ Display( )
 	glPushMatrix( );
 	glRotatef( EarthOrbitalPeriod, 0.0, 1.0, 0.0 );
 	glTranslatef( -EarthOrbitalRadius, 0.0, 0.0 );
+	SetMaterial( 1.0, 1.0, 1.0, 5.0 );
 	glBindTexture( GL_TEXTURE_2D, EarthTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( EarthList );
@@ -499,6 +502,7 @@ Display( )
 	glPushMatrix( );
 	glRotatef( MarsOrbitalPeriod, 0.0, 1.0, 0.0 );
 	glTranslatef( 0.0, 0.0, -MarsOrbitalRadius );
+	SetMaterial( 1.0, 1.0, 1.0, 5.0 );
 	glBindTexture( GL_TEXTURE_2D, MarsTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( MarsList );
@@ -507,6 +511,7 @@ Display( )
 	glPushMatrix( );
 	glRotatef( JupiterOrbitalPeriod, 0.0, 1.0, 0.0 );
 	glTranslatef( JupiterOrbitalRadius, 0.0, 0.0 );
+	SetMaterial( 1.0, 1.0, 1.0, 5.0 );
 	glBindTexture( GL_TEXTURE_2D, JupiterTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( JupiterList );
@@ -515,6 +520,7 @@ Display( )
 	glPushMatrix( );
 	glRotatef( SaturnOrbitalPeriod, 0.0, 1.0, 0.0 );
 	glTranslatef( 0.0, 0.0, SaturnOrbitalRadius );
+	SetMaterial( 1.0, 1.0, 1.0, 5.0 );
 	glBindTexture( GL_TEXTURE_2D, SaturnTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( SaturnList );
@@ -523,6 +529,7 @@ Display( )
 	glPushMatrix( );
 	glRotatef( UranusOrbitalPeriod, 0.0, 1.0, 0.0 );
 	glTranslatef( -UranusOrbitalRadius, 0.0, 0.0 );
+	SetMaterial( 1.0, 1.0, 1.0, 5.0 );
 	glBindTexture( GL_TEXTURE_2D, UranusTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( UranusList );
@@ -531,6 +538,7 @@ Display( )
 	glPushMatrix( );
 	glRotatef( NeptuneOrbitalPeriod, 0.0, 1.0, 0.0 );
 	glTranslatef( 0.0, 0.0, -NeptuneOrbitalRadius );
+	SetMaterial( 1.0, 1.0, 1.0, 5.0 );
 	glBindTexture( GL_TEXTURE_2D, NeptuneTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( NeptuneList );
