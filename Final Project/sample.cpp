@@ -188,14 +188,14 @@ int		Xmouse, Ymouse;			// mouse values
 float	Xrot, Yrot;				// rotation angles in degrees
 int		NumLngs, NumLats;
 struct 	point *	Pts;
-float 	MercuryOrbitalRadius = 0.65;
-float 	VenusOrbitalRadius = 1.20;
-float 	EarthOrbitalRadius = 1.67;
-float 	MarsOrbitalRadius = 2.53;
-float 	JupiterOrbitalRadius = 8.67;
-float 	SaturnOrbitalRadius = 15.90;
-float 	UranusOrbitalRadius = 31.97;
-float 	NeptuneOrbitalRadius = 50.10;
+float 	MercuryOrbitalRadius = 0.63;
+float 	VenusOrbitalRadius = 0.90;
+float 	EarthOrbitalRadius = 1.13;
+float 	MarsOrbitalRadius = 1.57;
+float 	JupiterOrbitalRadius = 4.63;
+float 	SaturnOrbitalRadius = 8.25;
+float 	UranusOrbitalRadius = 16.28;
+float 	NeptuneOrbitalRadius = 25.35;
 float	MercuryOrbitalPeriod;
 float	VenusOrbitalPeriod;
 float	EarthOrbitalPeriod;
@@ -1801,7 +1801,7 @@ float
 CalculateOrbitalPeriod( float OrbitalRadius )
 {
 	float OrbitalPeriod = pow( OrbitalRadius, 3./2. );
-	int MAX_TIME_MS = OrbitalPeriod * 10000;
+	int MAX_TIME_MS = OrbitalPeriod * 7500;
 	int ms = glutGet( GLUT_ELAPSED_TIME );
 	ms %= MAX_TIME_MS;
 	float NewOrbitalPeriod = (float) ms / (float) MAX_TIME_MS * 360.0;
