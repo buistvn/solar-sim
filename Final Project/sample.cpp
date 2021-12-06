@@ -223,6 +223,7 @@ GLuint	SaturnTex;
 GLuint	UranusTex;
 GLuint	NeptuneTex;
 bool	Frozen;
+bool	SunLightOn;
 
 
 // function prototypes:
@@ -264,6 +265,11 @@ float			Unit(float [3], float [3]);
 inline struct point * 	PtsPointer( int, int );
 inline void 			DrawPoint( struct point * );
 void 					OsuSphere( float, int, int );
+
+float *	Array3( float, float, float );
+float *	MulArray3( float, float[3] );
+void 	SetMaterial( float, float, float, float );
+void 	SetPointLight( int, float, float, float, float, float, float );
 
 float	CalculateOrbitalPeriod( float );
 
@@ -440,6 +446,21 @@ Display( )
 	// since we are using glScalef( ), be sure normals get unitized:
 
 	glEnable( GL_NORMALIZE );
+
+	// enable lighting:
+
+	glEnable( GL_LIGHTING );
+
+	SetPointLight( GL_LIGHT0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0 );
+
+	if ( SunLightOn ) 
+	{
+		glEnable( GL_LIGHT0 );
+	}
+	else
+	{
+		glDisable( GL_LIGHT0 );
+	}
 
 	// draw the current object:
 
@@ -1043,6 +1064,10 @@ Keyboard( unsigned char c, int x, int y )
 			}
 			break;
 
+		case '0':
+			SunLightOn = !SunLightOn;
+			break;
+
 		default:
 			fprintf( stderr, "Don't know what to do with keyboard hit: '%c' (0x%0x)\n", c, c );
 	}
@@ -1168,6 +1193,7 @@ Reset( )
 	WhichProjection = PERSP;
 	Xrot = Yrot = 0.;
 	Frozen = false;
+	SunLightOn = true;
 }
 
 
@@ -1795,6 +1821,58 @@ OsuSphere( float radius, int slices, int stacks )
 
 	delete [ ] Pts;
 	Pts = NULL;
+}
+
+float White[ ] = { 1.,1.,1.,1. };
+
+float *
+Array3( float a, float b, float c )
+{
+	static float array[4];
+	array[0] = a;
+	array[1] = b;
+	array[2] = c;
+	array[3] = 1.;
+	return array;
+}
+
+float *
+MulArray3( float factor, float array0[3] )
+{
+	static float array[4];
+	array[0] = factor * array0[0];
+	array[1] = factor * array0[1];
+	array[2] = factor * array0[2];
+	array[3] = 1.;
+	return array;
+}
+
+void
+SetMaterial( float r, float g, float b, float shininess )
+{
+	glMaterialfv( GL_BACK, GL_EMISSION, Array3( 0., 0., 0. ) );
+	glMaterialfv( GL_BACK, GL_AMBIENT, MulArray3( .4f, White ) );
+	glMaterialfv( GL_BACK, GL_DIFFUSE, MulArray3( 1., White ) );
+	glMaterialfv( GL_BACK, GL_SPECULAR, Array3( 0., 0., 0. ) );
+	glMaterialf ( GL_BACK, GL_SHININESS, 2.f );
+	glMaterialfv( GL_FRONT, GL_EMISSION, Array3( 0., 0., 0. ) );
+	glMaterialfv( GL_FRONT, GL_AMBIENT, Array3( r, g, b ) );
+	glMaterialfv( GL_FRONT, GL_DIFFUSE, Array3( r, g, b ) );
+	glMaterialfv( GL_FRONT, GL_SPECULAR, MulArray3( .8f, White ) );
+	glMaterialf ( GL_FRONT, GL_SHININESS, shininess );
+}
+
+void
+SetPointLight( int ilight, float x, float y, float z, float r, float g, float b )
+{
+	glLightfv( ilight, GL_POSITION, Array3( x, y, z ) );
+	glLightfv( ilight, GL_AMBIENT, Array3( 0., 0., 0. ) );
+	glLightfv( ilight, GL_DIFFUSE, Array3( r, g, b ) );
+	glLightfv( ilight, GL_SPECULAR, Array3( r, g, b ) );
+	glLightf ( ilight, GL_CONSTANT_ATTENUATION, 1. );
+	glLightf ( ilight, GL_LINEAR_ATTENUATION, 0. );
+	glLightf ( ilight, GL_QUADRATIC_ATTENUATION, 0. );
+	glEnable( ilight );
 }
 
 float
