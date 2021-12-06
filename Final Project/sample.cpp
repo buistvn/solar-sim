@@ -213,6 +213,7 @@ GLuint	JupiterList;
 GLuint	SaturnList;
 GLuint	UranusList;
 GLuint	NeptuneList;
+GLuint	StarsList;
 GLuint	SunTex;
 GLuint	MercuryTex;
 GLuint	VenusTex;
@@ -222,6 +223,7 @@ GLuint	JupiterTex;
 GLuint	SaturnTex;
 GLuint	UranusTex;
 GLuint	NeptuneTex;
+GLuint	StarsTex;
 bool	Frozen;
 bool	SunLightOn;
 
@@ -544,6 +546,12 @@ Display( )
 	glCallList( NeptuneList );
 	glPopMatrix( );
 
+	glPushMatrix( );
+	glBindTexture( GL_TEXTURE_2D, StarsTex );
+	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+	glCallList( StarsList );
+	glPopMatrix( );
+
 	glDisable( GL_TEXTURE_2D );
 
 #ifdef DEMO_Z_FIGHTING
@@ -845,6 +853,7 @@ InitGraphics( )
 	int width6, height6;
 	int width7, height7;
 	int width8, height8;
+	int width9, height9;
 	unsigned char * TextureArray0 = BmpToTexture( "suntex.bmp", &width0, &height0 );
 	unsigned char * TextureArray1 = BmpToTexture( "mercurytex.bmp", &width1, &height1 );
 	unsigned char * TextureArray2 = BmpToTexture( "venustex.bmp", &width2, &height2 );
@@ -854,6 +863,7 @@ InitGraphics( )
 	unsigned char * TextureArray6 = BmpToTexture( "saturntex.bmp", &width6, &height6 );
 	unsigned char * TextureArray7 = BmpToTexture( "uranustex.bmp", &width7, &height7 );
 	unsigned char * TextureArray8 = BmpToTexture( "neptunetex.bmp", &width8, &height8 );
+	unsigned char * TextureArray9 = BmpToTexture( "starstex.bmp", &width9, &height9 );
 	glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
 
 	glGenTextures( 1, &SunTex );
@@ -865,6 +875,7 @@ InitGraphics( )
 	glGenTextures( 1, &SaturnTex );
 	glGenTextures( 1, &UranusTex );
 	glGenTextures( 1, &NeptuneTex );
+	glGenTextures( 1, &StarsTex );
 
 	glBindTexture( GL_TEXTURE_2D, SunTex );
 
@@ -937,6 +948,14 @@ InitGraphics( )
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
 	glTexImage2D( GL_TEXTURE_2D, 0, 3, width8, height8, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureArray8 );
+
+	glBindTexture( GL_TEXTURE_2D, StarsTex );
+
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+	glTexImage2D( GL_TEXTURE_2D, 0, 3, width9, height9, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureArray9 );
 
 	// init glew (a window must be open to do this):
 
@@ -1020,6 +1039,11 @@ InitLists( )
 	NeptuneList = glGenLists( 1 );
 	glNewList( NeptuneList, GL_COMPILE );
 		OsuSphere( NeptuneRadius, 100, 100 );
+	glEndList( );
+
+	StarsList = glGenLists( 1 );
+	glNewList( StarsList, GL_COMPILE );
+		OsuSphere( 100.0, 100, 100 );
 	glEndList( );
 
 	// create the axes:
