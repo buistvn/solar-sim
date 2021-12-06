@@ -461,7 +461,7 @@ Display( )
 
 	glPushMatrix( );
 	glRotatef( VenusOrbitalPeriod, 0.0, 1.0, 0.0 );
-	glTranslatef( VenusOrbitalRadius, 0.0, 0.0 );
+	glTranslatef( 0.0, 0.0, VenusOrbitalRadius );
 	glBindTexture( GL_TEXTURE_2D, VenusTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( VenusList );
@@ -469,7 +469,7 @@ Display( )
 
 	glPushMatrix( );
 	glRotatef( EarthOrbitalPeriod, 0.0, 1.0, 0.0 );
-	glTranslatef( EarthOrbitalRadius, 0.0, 0.0 );
+	glTranslatef( -EarthOrbitalRadius, 0.0, 0.0 );
 	glBindTexture( GL_TEXTURE_2D, EarthTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( EarthList );
@@ -477,7 +477,7 @@ Display( )
 
 	glPushMatrix( );
 	glRotatef( MarsOrbitalPeriod, 0.0, 1.0, 0.0 );
-	glTranslatef( MarsOrbitalRadius, 0.0, 0.0 );
+	glTranslatef( 0.0, 0.0, -MarsOrbitalRadius );
 	glBindTexture( GL_TEXTURE_2D, MarsTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( MarsList );
@@ -493,7 +493,7 @@ Display( )
 
 	glPushMatrix( );
 	glRotatef( SaturnOrbitalPeriod, 0.0, 1.0, 0.0 );
-	glTranslatef( SaturnOrbitalRadius, 0.0, 0.0 );
+	glTranslatef( 0.0, 0.0, SaturnOrbitalRadius );
 	glBindTexture( GL_TEXTURE_2D, SaturnTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( SaturnList );
@@ -501,7 +501,7 @@ Display( )
 
 	glPushMatrix( );
 	glRotatef( UranusOrbitalPeriod, 0.0, 1.0, 0.0 );
-	glTranslatef( UranusOrbitalRadius, 0.0, 0.0 );
+	glTranslatef( -UranusOrbitalRadius, 0.0, 0.0 );
 	glBindTexture( GL_TEXTURE_2D, UranusTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( UranusList );
@@ -509,7 +509,7 @@ Display( )
 
 	glPushMatrix( );
 	glRotatef( NeptuneOrbitalPeriod, 0.0, 1.0, 0.0 );
-	glTranslatef( NeptuneOrbitalRadius, 0.0, 0.0 );
+	glTranslatef( 0.0, 0.0, -NeptuneOrbitalRadius );
 	glBindTexture( GL_TEXTURE_2D, NeptuneTex );
 	glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glCallList( NeptuneList );
@@ -1801,7 +1801,7 @@ float
 CalculateOrbitalPeriod( float OrbitalRadius )
 {
 	float OrbitalPeriod = pow( OrbitalRadius, 3./2. );
-	int MAX_TIME_MS = OrbitalPeriod * 7500;
+	int MAX_TIME_MS = OrbitalPeriod * 4000;
 	int ms = glutGet( GLUT_ELAPSED_TIME );
 	ms %= MAX_TIME_MS;
 	float NewOrbitalPeriod = (float) ms / (float) MAX_TIME_MS * 360.0;
