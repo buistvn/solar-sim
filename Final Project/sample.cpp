@@ -935,53 +935,62 @@ InitLists( )
 	float dx = BOXSIZE / 2.f;
 	float dy = BOXSIZE / 2.f;
 	float dz = BOXSIZE / 2.f;
+	float SunRadius = 0.500;
+	float MercuryRadius = 0.017;
+	float VenusRadius = 0.041;
+	float EarthRadius = 0.043;
+	float MarsRadius = 0.023;
+	float JupiterRadius = 0.477;
+	float SaturnRadius = 0.397;
+	float UranusRadius = 0.173;
+	float NeptuneRadius = 0.168;
 	glutSetWindow( MainWindow );
 
 	// create the objects:
 
 	SunList = glGenLists( 1 );
 	glNewList( SunList, GL_COMPILE );
-		OsuSphere( 0.500, 100, 100 );
+		OsuSphere( SunRadius, 100, 100 );
 	glEndList( );
 
 	MercuryList = glGenLists( 1 );
 	glNewList( MercuryList, GL_COMPILE );
-		OsuSphere( 0.017, 100, 100 );
+		OsuSphere( MercuryRadius, 100, 100 );
 	glEndList( );
 
 	VenusList = glGenLists( 1 );
 	glNewList( VenusList, GL_COMPILE );
-		OsuSphere( 0.041, 100, 100 );
+		OsuSphere( VenusRadius, 100, 100 );
 	glEndList( );
 
 	EarthList = glGenLists( 1 );
 	glNewList( EarthList, GL_COMPILE );
-		OsuSphere( 0.043, 100, 100 );
+		OsuSphere( EarthRadius, 100, 100 );
 	glEndList( );
 
 	MarsList = glGenLists( 1 );
 	glNewList( MarsList, GL_COMPILE );
-		OsuSphere( 0.023, 100, 100 );
+		OsuSphere( MarsRadius, 100, 100 );
 	glEndList( );
 
 	JupiterList = glGenLists( 1 );
 	glNewList( JupiterList, GL_COMPILE );
-		OsuSphere( 0.477, 100, 100 );
+		OsuSphere( JupiterRadius, 100, 100 );
 	glEndList( );
 
 	SaturnList = glGenLists( 1 );
 	glNewList( SaturnList, GL_COMPILE );
-		OsuSphere( 0.397, 100, 100 );
+		OsuSphere( SaturnRadius, 100, 100 );
 	glEndList( );
 
 	UranusList = glGenLists( 1 );
 	glNewList( UranusList, GL_COMPILE );
-		OsuSphere( 0.173, 100, 100 );
+		OsuSphere( UranusRadius, 100, 100 );
 	glEndList( );
 
 	NeptuneList = glGenLists( 1 );
 	glNewList( NeptuneList, GL_COMPILE );
-		OsuSphere( 0.168, 100, 100 );
+		OsuSphere( NeptuneRadius, 100, 100 );
 	glEndList( );
 
 	// create the axes:
