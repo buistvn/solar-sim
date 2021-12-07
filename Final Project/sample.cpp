@@ -228,6 +228,7 @@ GLuint	StarsTex;
 bool	Frozen;
 bool	SunLightOn;
 bool	OrbitPathOn;
+bool	OutsideView;
 
 
 // function prototypes:
@@ -410,18 +411,25 @@ Display( )
 
 	// set the eye position, look-at position, and up-vector:
 
-	gluLookAt( 0., 0., 3.,     0., 0., 0.,     0., 1., 0. );
+	if ( OutsideView )
+	{
+		gluLookAt( 0., 5., 5.,     0., 0., 0.,     0., 1., 0. );
+	}
+	else
+	{
+		gluLookAt( 0., 0., 3.,     0., 0., 0.,     0., 1., 0. );
 
-	// rotate the scene:
+		// rotate the scene:
 
-	glRotatef( (GLfloat)Yrot, 0., 1., 0. );
-	glRotatef( (GLfloat)Xrot, 1., 0., 0. );
+		glRotatef( (GLfloat)Yrot, 0., 1., 0. );
+		glRotatef( (GLfloat)Xrot, 1., 0., 0. );
 
-	// uniformly scale the scene:
+		// uniformly scale the scene:
 
-	if( Scale < MINSCALE )
-		Scale = MINSCALE;
-	glScalef( (GLfloat)Scale, (GLfloat)Scale, (GLfloat)Scale );
+		if( Scale < MINSCALE )
+			Scale = MINSCALE;
+		glScalef( (GLfloat)Scale, (GLfloat)Scale, (GLfloat)Scale );
+	}
 
 	// set the fog parameters:
 	// (this is really here to do intensity depth cueing)
@@ -1129,6 +1137,10 @@ Keyboard( unsigned char c, int x, int y )
 			OrbitPathOn = !OrbitPathOn;
 			break;
 
+		case '2':
+			OutsideView = !OutsideView;
+			break;
+
 		default:
 			fprintf( stderr, "Don't know what to do with keyboard hit: '%c' (0x%0x)\n", c, c );
 	}
@@ -1256,6 +1268,7 @@ Reset( )
 	Frozen = false;
 	SunLightOn = true;
 	OrbitPathOn = true;
+	OutsideView = false;
 }
 
 
