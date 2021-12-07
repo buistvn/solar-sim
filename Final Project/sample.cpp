@@ -214,6 +214,7 @@ GLuint	SaturnList;
 GLuint	UranusList;
 GLuint	NeptuneList;
 GLuint	StarsList;
+GLuint	OrbitsList;
 GLuint	SunTex;
 GLuint	MercuryTex;
 GLuint	VenusTex;
@@ -226,6 +227,7 @@ GLuint	NeptuneTex;
 GLuint	StarsTex;
 bool	Frozen;
 bool	SunLightOn;
+bool	OrbitPathOn;
 
 
 // function prototypes:
@@ -274,6 +276,7 @@ void 	SetMaterial( float, float, float, float );
 void 	SetPointLight( int, float, float, float, float, float, float );
 
 float	CalculateOrbitalPeriod( float );
+void	DrawOrbitPath( float );
 
 
 // main program:
@@ -553,6 +556,16 @@ Display( )
 	glPopMatrix( );
 
 	glDisable( GL_TEXTURE_2D );
+
+	glDisable( GL_LIGHTING );
+
+	if ( OrbitPathOn )
+	{
+		glPushMatrix( );
+		glRotatef( 90.0, 1.0, 0.0, 0.0 );
+		glCallList( OrbitsList );
+		glPopMatrix( );
+	}
 
 #ifdef DEMO_Z_FIGHTING
 	if( DepthFightingOn != 0 )
@@ -1046,6 +1059,18 @@ InitLists( )
 		OsuSphere( 100.0, 100, 100 );
 	glEndList( );
 
+	OrbitsList = glGenLists( 1 );
+	glNewList( OrbitsList, GL_COMPILE );
+		DrawOrbitPath( MercuryOrbitalRadius );
+		DrawOrbitPath( VenusOrbitalRadius );
+		DrawOrbitPath( EarthOrbitalRadius );
+		DrawOrbitPath( MarsOrbitalRadius );
+		DrawOrbitPath( JupiterOrbitalRadius );
+		DrawOrbitPath( SaturnOrbitalRadius );
+		DrawOrbitPath( UranusOrbitalRadius );
+		DrawOrbitPath( NeptuneOrbitalRadius );
+	glEndList( );
+
 	// create the axes:
 
 	AxesList = glGenLists( 1 );
@@ -1098,6 +1123,10 @@ Keyboard( unsigned char c, int x, int y )
 
 		case '0':
 			SunLightOn = !SunLightOn;
+			break;
+
+		case '1':
+			OrbitPathOn = !OrbitPathOn;
 			break;
 
 		default:
@@ -1226,6 +1255,7 @@ Reset( )
 	Xrot = Yrot = 0.;
 	Frozen = false;
 	SunLightOn = true;
+	OrbitPathOn = true;
 }
 
 
@@ -1910,11 +1940,27 @@ SetPointLight( int ilight, float x, float y, float z, float r, float g, float b 
 float
 CalculateOrbitalPeriod( float OrbitalRadius )
 {
-	float OrbitalPeriod = pow( OrbitalRadius, 3./2. );
+	float OrbitalPeriod = pow( OrbitalRadius, 3.0/2.0 );
 	int MAX_TIME_MS = OrbitalPeriod * 4000;
 	int ms = glutGet( GLUT_ELAPSED_TIME );
 	ms %= MAX_TIME_MS;
 	float NewOrbitalPeriod = (float) ms / (float) MAX_TIME_MS * 360.0;
 
 	return NewOrbitalPeriod;
+}
+
+void
+DrawOrbitPath( float OrbitalRadius )
+{
+	float dang = 2.0 * M_PI / (float) 99;
+	float ang = 0.0;
+
+	glColor3f( 1.0, 1.0, 1.0 );
+	glBegin( GL_LINE_LOOP );
+		for ( int i = 0; i < 100; i++ )
+		{
+			glVertex3f( OrbitalRadius * cos(ang), OrbitalRadius * sin(ang), 0.0 );
+			ang += dang;
+		}
+	glEnd( );
 }
