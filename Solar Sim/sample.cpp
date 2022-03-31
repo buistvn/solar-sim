@@ -16,27 +16,9 @@
 #include "glut.h"
 
 
-//	This is a sample OpenGL / GLUT program
-//
-//	The objective is to draw a 3d object and change the color of the axes
-//		with a glut menu
-//
-//	The left mouse button does rotation
-//	The middle mouse button does scaling
-//	The user interface allows:
-//		1. The axes to be turned on and off
-//		2. The color of the axes to be changed
-//		3. Debugging to be turned on and off
-//		4. Depth cueing to be turned on and off
-//		5. The projection to be changed
-//		6. The transformations to be reset
-//		7. The program to quit
-//
-//	Author: Steven Bui
-
 // title of these windows:
 
-const char *WINDOWTITLE = { "OpenGL / GLUT Sample -- Steven Bui" };
+const char *WINDOWTITLE = { "Solar Sim -- Steven Bui" };
 const char *GLUITITLE   = { "User Interface Window" };
 
 // what the glui package defines as true and false:
