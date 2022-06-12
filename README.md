@@ -3,7 +3,7 @@
 
 ![Project Screenshot][project-screenshot]
 
-Solar Sim is an interactive 3D simulator of the solar system. This includes the Sun and the planets that orbit it. Each of these have their own texture maps. The Sun is located at the origin and emits light in all directions. All of the planet sizes, distances, and orbital periods are to scale.
+Solar Sim is an interactive 3D simulator of the solar system which includes the Sun and the planets that orbit it. All of these entities are displayed with their own texture maps. The Sun is located at the origin and emits light in all directions. All of the planet sizes, distances, and orbital periods are to scale.
 
 
 
@@ -33,10 +33,8 @@ To run the project, follow these steps.
 
 1. Open the solution in Visual Studio
 2. Select `Build > Clean Solution`, then select `Build > Build Sample`, and then select `Debug > Start Without Debugging`
-3. Interact with the simulation
+3. Interact with the simulation using the controls below
    ```
-   Controls
-
    - Click and drag to move the camera
    - Use the scroll wheel to zoom in and out
    - Press 0 to toggle the Sun's light
